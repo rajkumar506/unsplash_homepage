@@ -1,14 +1,13 @@
 export const fetchImages = async (searchValue) => {
+  let API_KEY = process.env.REACT_APP_API_ACCESS_KEY;
   let baseUrl = `https://api.unsplash.com`;
   let Url;
   if (searchValue) {
     Url =
       baseUrl +
-      `/search/photos?page=2&query=${searchValue}&client_id=0tphuKko-NDlZLEaaTz_W-ApILNckDV57k5T0bRWt4o&count=30`;
+      `/search/photos?query=${searchValue}&client_id=${API_KEY}&count=30`;
   } else {
-    Url =
-      baseUrl +
-      `/photos/random?client_id=0tphuKko-NDlZLEaaTz_W-ApILNckDV57k5T0bRWt4o&count=30`;
+    Url = baseUrl + `/photos/random?client_id=${API_KEY}&count=30`;
   }
 
   let myHeaders = new Headers();

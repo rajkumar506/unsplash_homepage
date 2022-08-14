@@ -6,11 +6,11 @@ import { fetchImages } from "../services/fecthImages";
 export const Viewport = () => {
   const [searchValue, setSearchValue] = useState("");
   const [searchedResult, setSearchedResult] = useState([]);
-  const [count, setCount] = useState(1);
-  const searchBar = useRef();
+  const [headerSearchBarValue, setHeaderSearchBarValue] = useState("");
+  const [page, setPage] = useState(0);
   useEffect(() => {
     let callFetchImages = async () => {
-      let response = await fetchImages(searchValue);
+      let response = await fetchImages(headerSearchBarValue);
       if (response && response.results) {
         setSearchedResult([...searchedResult, ...response.results]);
       } else if (response) {
@@ -19,18 +19,23 @@ export const Viewport = () => {
     };
 
     callFetchImages();
-  }, [count]);
+  }, [page]);
   const handleSearchValue = (event) => {
     setSearchValue(event.target.value);
   };
   const handleKeyDown = (event) => {
     if (event.keyCode === 13) {
-      setCount(count + 1);
+      setPage(page + 1);
+      setHeaderSearchBarValue(searchValue);
+      setSearchValue("");
     }
   };
   return (
     <div>
-      <Header />
+      <Header
+        headerSearchBarValue={headerSearchBarValue}
+        setHeaderSearchBarValue={setHeaderSearchBarValue}
+      />
       <div className={`${Styles["image-container"]}`}>
         <div className={`${Styles["centrel-search-text-container"]}`}>
           <div className={`${Styles["unsplash-text"]}`}>Unspalsh</div>
@@ -40,7 +45,6 @@ export const Viewport = () => {
             Powered by creators everywhere.
           </p>
           <input
-            ref={searchBar}
             className={`${Styles["search-box"]}`}
             type="search"
             value={searchValue}

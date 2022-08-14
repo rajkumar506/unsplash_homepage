@@ -7,7 +7,7 @@ import rightArrow from "./assets/rightArrow.svg";
 import unsplash from "./assets/unsplash.png";
 import Styles from "./Viewport.module.scss";
 
-export const Header = () => {
+export const Header = ({ headerSearchBarValue, setHeaderSearchBarValue }) => {
   const scrollabletab = useRef();
   const leftSlide = useRef();
   const rightSlide = useRef();
@@ -90,6 +90,10 @@ export const Header = () => {
           className={`${Styles["header-search-box"]}`}
           type="search"
           placeholder="Search photos here"
+          value={headerSearchBarValue}
+          onChange={(event) => {
+            setHeaderSearchBarValue(event.target.value);
+          }}
         ></input>
         <div className={`${Styles["notification-submit-hum-etc-container"]}`}>
           <span
