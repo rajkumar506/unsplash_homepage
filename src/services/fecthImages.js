@@ -2,7 +2,6 @@ export const fetchImages = async (searchValue) => {
   let baseUrl = `https://api.unsplash.com`;
   let Url;
   if (searchValue) {
-    console.log("my search value", searchValue);
     Url =
       baseUrl +
       `/search/photos?page=2&query=${searchValue}&client_id=0tphuKko-NDlZLEaaTz_W-ApILNckDV57k5T0bRWt4o&count=30`;

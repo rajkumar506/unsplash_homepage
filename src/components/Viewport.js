@@ -8,11 +8,9 @@ export const Viewport = () => {
   const [searchedResult, setSearchedResult] = useState([]);
   const [count, setCount] = useState(1);
   const searchBar = useRef();
-  console.log("my count", count);
   useEffect(() => {
     let callFetchImages = async () => {
       let response = await fetchImages(searchValue);
-      console.log("my response", response);
       if (response && response.results) {
         setSearchedResult([...searchedResult, ...response.results]);
       } else if (response) {
@@ -22,34 +20,6 @@ export const Viewport = () => {
 
     callFetchImages();
   }, [count]);
-
-  const throttling = (fun, time) => {
-    console.log("hello ia m running");
-    return () => {
-      let flag = true;
-      if (flag) {
-        fun();
-        flag = false;
-        setTimeout(() => {
-          flag = true;
-        }, time);
-      }
-    };
-  };
-  window.addEventListener(
-    "scroll",
-    throttling((event) => {
-      //event.stopPropagation();
-      if (
-        window.innerHeight + window.pageYOffset >=
-        document.body.offsetHeight
-      ) {
-        console.log("At the bottom!");
-      }
-    }),
-    2000
-  );
-
   const handleSearchValue = (event) => {
     setSearchValue(event.target.value);
   };

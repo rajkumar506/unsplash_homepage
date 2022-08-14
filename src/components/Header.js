@@ -6,31 +6,12 @@ import leftArrow from "./assets/leftArrow.svg";
 import rightArrow from "./assets/rightArrow.svg";
 import unsplash from "./assets/unsplash.png";
 import Styles from "./Viewport.module.scss";
-//import ScrollableTabs from "./Tabs";
-// import Tabs from "@mui/material/Tabs";
-// import Tab from "@mui/material/Tab";
-// import Box from "@mui/material/Box";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import Box from "@material-ui/core/Box";
-import { withStyles } from "@material-ui/core/styles";
 
 export const Header = () => {
-  const [count, setCount] = useState(1);
-  const [arrow, setArrow] = useState(1);
   const scrollabletab = useRef();
   const leftSlide = useRef();
   const rightSlide = useRef();
-  // useEffect(() => {
-  //   if (
-  //     scrollabletab.current.scrollLeft === scrollabletab.current.scrollLeftMax
-  //   ) {
-  //     leftSlide.current.style.visibility = "hidden";
-  //   }
-  //   if (scrollabletab.current.scrollLeft === 0) {
-  //     rightSlide.current.style.visibility = "hidden";
-  //   }
-  // }, []);
+
   let list = [
     "Sports",
     "Fashion",
@@ -82,9 +63,6 @@ export const Header = () => {
   ];
 
   const leftSlider = (event) => {
-    console.log("my hello window", scrollabletab.current.scrollLeft);
-    console.log("my scroll innerwidth", scrollabletab.current);
-    console.log("my inner width is", window.innerWidth);
     if (event.target.alt === "leftArrow") {
       scrollabletab.current.scrollLeft += 300;
     } else if (event.target.alt === "rightArrow") {
@@ -103,7 +81,7 @@ export const Header = () => {
         <span>
           {" "}
           <img
-            className={`${Styles["user-image"]}`}
+            className={`${Styles["logo-image"]}`}
             src={unsplash}
             alt="unsaplsh-logo"
           ></img>
@@ -113,7 +91,7 @@ export const Header = () => {
           type="search"
           placeholder="Search photos here"
         ></input>
-        <div>
+        <div className={`${Styles["notification-submit-hum-etc-container"]}`}>
           <span
             onMouseOut={(event) => handleMouseOut(event)}
             onMouseEnter={(event) => handleMouseEnter(event)}
