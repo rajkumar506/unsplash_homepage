@@ -1,6 +1,12 @@
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## To run in local :
+1.Clone repo. 
+2.install yarn if not in your local.
+3. set your client ID (Access API key of unsplash see doc.for help ) in .env file with name "REACT_APP_API_ACCESS_KEY".keep in mind your .env should be in root folder path.
+4.insatll sass through yarn (command check on google).
+5.then run in your terminal by yarn start.
 
 ## Available Scripts
 
