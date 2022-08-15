@@ -1,13 +1,13 @@
-export const fetchImages = async (searchValue) => {
+export const fetchImages = async (searchValue, page) => {
   let API_KEY = process.env.REACT_APP_API_ACCESS_KEY;
   let baseUrl = `https://api.unsplash.com`;
   let Url;
   if (searchValue) {
     Url =
       baseUrl +
-      `/search/photos?query=${searchValue}&client_id=${API_KEY}&count=30`;
+      `/search/photos?page=${page}&query=${searchValue}&client_id=${API_KEY}&count=30`;
   } else {
-    Url = baseUrl + `/photos/random?client_id=${API_KEY}&count=30`;
+    Url = baseUrl + `/photos/random?page=${page}&client_id=${API_KEY}&count=30`;
   }
 
   let myHeaders = new Headers();

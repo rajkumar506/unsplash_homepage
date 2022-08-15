@@ -5,23 +5,66 @@ import { Header } from "./Header";
 import { fetchImages } from "../services/fecthImages";
 export const Viewport = () => {
   const [searchValue, setSearchValue] = useState("");
-  const [searchedResult, setSearchedResult] = useState([]);
+  const [result, setResult] = useState([]);
   const [headerSearchBarValue, setHeaderSearchBarValue] = useState("");
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
+
   useEffect(() => {
     let callFetchImages = async () => {
-      let response = await fetchImages(headerSearchBarValue);
+      let response = await fetchImages(headerSearchBarValue, page);
       if (response && response.results) {
-        setSearchedResult([...searchedResult, ...response.results]);
+        // it will not show infinite scroll for search photos
+        setResult([...response.results]);
       } else if (response) {
-        setSearchedResult([...searchedResult, ...response]);
+        setResult([...result, ...response]);
       }
     };
 
     callFetchImages();
   }, [page]);
+
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      if (
+        window.innerHeight + document.documentElement.scrollTop >=
+        document.documentElement.offsetHeight - 300
+      ) {
+        let returnedFun = throtlling(handleSetPage, 3000);
+        returnedFun();
+      }
+    });
+
+    return () => {
+      window.removeEventListener("scroll", () => {
+        if (
+          window.innerHeight + document.documentElement.scrollTop ===
+          document.documentElement.offsetHeight
+        ) {
+          let returnedFun = throtlling(handleSetPage, 3000);
+          returnedFun();
+        }
+      });
+    };
+  }, []);
+
+  const throtlling = (fun, delay) => {
+    let flag = true;
+    return () => {
+      if (flag) {
+        fun();
+        flag = false;
+        setTimeout(() => {
+          flag = true;
+        }, delay);
+      }
+    };
+  };
+
   const handleSearchValue = (event) => {
     setSearchValue(event.target.value);
+  };
+  const handleSetPage = () => {
+    setPage(page + 1);
   };
   const handleKeyDown = (event) => {
     if (event.keyCode === 13) {
@@ -54,7 +97,7 @@ export const Viewport = () => {
           ></input>
         </div>
       </div>
-      {searchedResult ? <Images data={searchedResult} /> : null}
+      {result ? <Images data={result} /> : null}
     </div>
   );
 };
