@@ -8,7 +8,6 @@ export const Viewport = () => {
   const [result, setResult] = useState([]);
   const [headerSearchBarValue, setHeaderSearchBarValue] = useState("");
   const [page, setPage] = useState(1);
-
   useEffect(() => {
     let callFetchImages = async () => {
       let response = await fetchImages(headerSearchBarValue, page);
@@ -29,7 +28,7 @@ export const Viewport = () => {
         window.innerHeight + document.documentElement.scrollTop >=
         document.documentElement.offsetHeight - 300
       ) {
-        let returnedFun = throtlling(handleSetPage, 3000);
+        let returnedFun = throtlling(handleSetPage, 2000);
         returnedFun();
       }
     });
@@ -37,15 +36,15 @@ export const Viewport = () => {
     return () => {
       window.removeEventListener("scroll", () => {
         if (
-          window.innerHeight + document.documentElement.scrollTop ===
-          document.documentElement.offsetHeight
+          window.innerHeight + document.documentElement.scrollTop >=
+          document.documentElement.offsetHeight - 300
         ) {
-          let returnedFun = throtlling(handleSetPage, 3000);
+          let returnedFun = throtlling(handleSetPage, 2000);
           returnedFun();
         }
       });
     };
-  }, []);
+  }, [document.documentElement.scrollTop]);
 
   const throtlling = (fun, delay) => {
     let flag = true;
