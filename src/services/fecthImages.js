@@ -21,6 +21,6 @@ export const fetchImages = async (searchValue, page) => {
     response = await response.json();
     return response;
   } catch (error) {
-    console.log("my error", error);
+    alert("hey, sorry due to", error);   
   }
 };
